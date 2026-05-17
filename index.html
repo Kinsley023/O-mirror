@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>你的頭皮住著哪種毛囊寶寶？ | O'Mirror 專屬髮肌測驗</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Moodboard Style Background Decorations -->
+        <div class="moodboard-bg">
+            <svg class="deco deco-ribbon" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,25 Q25,0 50,25 T100,25 T150,25 T200,25" fill="none" stroke="#E6E0AC" stroke-width="20" stroke-linecap="round"/>
+            </svg>
+            <svg class="deco deco-star" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,0 L60,40 L100,50 L60,60 L50,100 L40,60 L0,50 L40,40 Z" fill="#8CC63F"/>
+            </svg>
+            <svg class="deco deco-star-pink" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50,0 L60,40 L100,50 L60,60 L50,100 L40,60 L0,50 L40,40 Z" fill="#F4B5C6"/>
+            </svg>
+            <svg class="deco deco-leaf" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,100 Q0,0 100,0 Q100,100 0,100 Z" fill="#DFF0D8"/>
+            </svg>
+        </div>
+
+    <!-- 1. Landing Page -->
+    <section id="landing" class="screen active">
+        <header class="logo">
+            <h2>O'right | O'Mirror</h2>
+        </header>
+        <div class="content-wrapper">
+            <h3 class="subtitle">O'Mirror 綠色永續 專屬髮肌測驗</h3>
+            <h1 class="title">你的頭皮住著哪種<br>毛囊寶寶？</h1>
+            
+            <div class="mascot-container">
+                <div class="floating-mascot">
+                    <div class="mascot-body">
+                        <div class="eyes">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
+                        </div>
+                        <div class="mouth"></div>
+                        <div class="leaf"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom-action">
+            <button id="start-btn" class="glass-btn primary">
+                Start 測驗開始
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <div class="scroll-indicator">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Quiz Section -->
+    <section id="quiz" class="screen">
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text"><span id="current-q">1</span> / 12</div>
+        </div>
+        <div class="quiz-container" id="quiz-container">
+            <!-- Question card will be injected here -->
+        </div>
+    </section>
+
+    <!-- 3. Camera / Upload Section -->
+    <section id="camera" class="screen">
+        <div class="content-wrapper camera-wrapper">
+            <h2 class="title">看看你的毛囊寶寶長怎樣！</h2>
+            <p class="subtitle">請對準框線，讓我們為您掃描</p>
+            
+            <div class="viewfinder">
+                <div class="corners top-left"></div>
+                <div class="corners top-right"></div>
+                <div class="corners bottom-left"></div>
+                <div class="corners bottom-right"></div>
+                <div class="face-guide"></div>
+                <!-- Camera stream or placeholder -->
+                <div class="camera-stream-placeholder"></div>
+            </div>
+
+            <div class="camera-actions">
+                <button id="capture-btn" class="glass-btn primary capture-btn">
+                    <div class="lens"></div>
+                </button>
+                <button id="upload-btn" class="text-btn">或是上傳照片</button>
+            </div>
+        </div>
+        <div id="countdown" class="countdown-overlay hidden">3</div>
+        <div id="flash" class="flash-overlay hidden"></div>
+    </section>
+
+    <!-- 4. AI Avatar Transform Loading Section -->
+    <section id="loading" class="screen">
+        <div class="content-wrapper loading-wrapper">
+            <div class="scanning-container">
+                <div class="scanned-image-placeholder"></div>
+                <div class="scan-line"></div>
+                <div class="magic-particles">
+                    <div class="particle p1"></div>
+                    <div class="particle p2"></div>
+                    <div class="particle p3"></div>
+                </div>
+            </div>
+            <div class="loading-text-container">
+                <h3 id="loading-text">正在分析生活作息...</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Result Page & 6. Share Page -->
+    <section id="result" class="screen scrollable">
+        <header class="logo">
+            <h2>O'right | O'Mirror</h2>
+        </header>
+        <div class="result-container">
+            <!-- Avatar Area -->
+            <div class="result-avatar-area">
+                <div class="avatar-frame">
+                    <div class="avatar-image" id="result-avatar"></div>
+                </div>
+                <div class="speech-bubble">
+                    <p id="result-quote">「主人，感謝你的精緻護理，我很閃亮！」</p>
+                </div>
+            </div>
+
+            <!-- Title & Score Area -->
+            <div class="result-title-area">
+                <h2 id="result-title">【髮界富養貴婦人】</h2>
+                <div class="health-score-container">
+                    <span>頭皮健康指數</span>
+                    <div class="score-bar">
+                        <div class="score-fill" id="result-score-fill"></div>
+                    </div>
+                    <span class="score-number" id="result-score">95%</span>
+                </div>
+            </div>
+
+            <!-- Analysis Area (Journal Style) -->
+            <div class="journal-card">
+                <div class="journal-section">
+                    <h3>✨ 特質敘述</h3>
+                    <p id="result-desc">你的髮絲活在五星級飯店裡。你有極佳的護理觀念，將頭皮視為臉部的延伸，追求原生髮質的極致光澤與健康質感。</p>
+                </div>
+            </div>
+
+            <!-- Product Recommendation Area -->
+            <div class="product-recommendation">
+                <h3>適合您的專屬處方箋</h3>
+                
+                <!-- Tips Area -->
+                <div class="journal-card" style="margin-bottom: 1.5rem;">
+                    <div class="journal-section">
+                        <h3>🌱 生活小撇步</h3>
+                        <p id="result-tips">洗頭前先用梳子輕柔按摩頭皮，洗完頭後務必先塗抹護髮油再吹乾，鎖住髮絲水分。</p>
+                    </div>
+                </div>
+
+                <div class="product-cards" id="product-list">
+                    <!-- Products injected via JS -->
+                </div>
+            </div>
+
+            <!-- Share & CRM Area -->
+            <div class="share-crm-area">
+                <div class="share-buttons">
+                    <button class="glass-btn secondary share-btn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+                        儲存毛囊寶寶卡
+                    </button>
+                    <button class="glass-btn secondary share-btn">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"/></svg>
+                        分享結果
+                    </button>
+                </div>
+
+                <div class="crm-box">
+                    <div class="gift-icon">🎁</div>
+                    <h3>領取完整保養教學與折價券</h3>
+                    <div class="email-form">
+                        <input type="email" id="email-input" placeholder="請輸入 Email...">
+                        <button id="submit-email" class="glass-btn primary small">領取</button>
+                    </div>
+                </div>
+            </div>
+            
+            <footer class="footer">
+                <button id="restart-btn" class="text-btn">重新測驗</button>
+            </footer>
+        </div>
+        <div id="confetti-container"></div>
+    </section>
+
+    </div> <!-- /app-container -->
+    <script src="app.js"></script>
+</body>
+</html>
