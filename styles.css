@@ -471,12 +471,38 @@ h3.subtitle {
 .corners.bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; border-radius: 0 0 10px 0; }
 
 .face-guide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 150px;
     height: 200px;
-    border: 2px dashed rgba(255,255,255,0.4);
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    border: 2px dashed rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+}
+
+.alignment-hint {
     position: absolute;
-    z-index: 1;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    z-index: 3;
+    white-space: nowrap;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
+    100% { transform: translateX(-50%) scale(1); }
 }
 
 .camera-stream-placeholder {
@@ -633,26 +659,41 @@ h3.subtitle {
 }
 
 .avatar-frame {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    padding: 8px;
-    background: linear-gradient(135deg, var(--primary-green), var(--creamy-pink));
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    width: 260px;
+    height: 260px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Removed the circular background and padding so the character dictates the shape */
 }
 
 .avatar-image {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    background: white; /* Will be replaced by image */
-    background-size: cover;
-    background-position: center;
+    background: transparent; 
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 5rem;
     position: relative;
+    /* Removed border-radius and overflow hidden */
+}
+
+.mascot-badge {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    z-index: 5;
+    background: var(--white);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border: 3px solid var(--primary-green);
 }
 
 .mascot-badge {
