@@ -472,11 +472,11 @@ h3.subtitle {
 
 .face-guide {
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 150px;
-    height: 200px;
+    width: 120px;
+    height: 150px;
     border: 2px dashed rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     z-index: 2;

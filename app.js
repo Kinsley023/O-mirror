@@ -501,11 +501,13 @@ function generateResult() {
             finalCanvas.height = 300;
             const ctx = finalCanvas.getContext('2d');
             
-            // 1. Define the face area
-            const targetFaceW = finalCanvas.width * 0.35;
-            const targetFaceH = targetFaceW * 1.1;
-            const targetFaceX = finalCanvas.width * 0.5;
-            const targetFaceY = finalCanvas.height * 0.55;
+            // 1. Define the face area to exactly match the .face-guide in the preview
+            // In preview: face-guide is 120x150, at top: 55%.
+            // On a 300x300 canvas where the video is object-fit:cover, this translates to:
+            const targetFaceW = finalCanvas.width * 0.32; // 96px
+            const targetFaceH = targetFaceW * 1.25; // 120px
+            const targetFaceX = finalCanvas.width * 0.5; // Centered X
+            const targetFaceY = finalCanvas.height * 0.55; // 55% Y
             
             // 2. Draw the user's photo only inside the face area (removes background)
             const userImg = new Image();
