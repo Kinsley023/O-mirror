@@ -210,6 +210,7 @@ let totalScore = 0;
 let stream = null;
 let capturedPhoto = null;
 let videoElement = null;
+let matchedPersonality = null;
 
 // DOM Elements
 const screens = document.querySelectorAll('.screen');
@@ -299,6 +300,7 @@ function handleOptionSelect(btn, opt, currentCard) {
             renderQuestion(currentQuestionIndex);
         } else {
             // Quiz finished
+            matchedPersonality = calculatePersonality();
             setTimeout(() => {
                 showScreen('camera');
                 initCamera();
@@ -335,11 +337,19 @@ async function initCamera() {
         
         cameraStreamPlaceholder.innerHTML = '';
         cameraStreamPlaceholder.appendChild(video);
+        
+        cameraStreamPlaceholder.innerHTML = '';
+        cameraStreamPlaceholder.appendChild(video);
+        
     } catch (err) {
         console.warn('Camera access denied or unavailable', err);
         cameraStreamPlaceholder.innerHTML = '<div style="display:flex;height:100%;align-items:center;justify-content:center;color:#888;">📷 模擬相機畫面</div>';
     }
 }
+
+
+
+
 
 function stopCamera() {
     if (stream) {
@@ -352,7 +362,7 @@ captureBtn.addEventListener('click', () => {
     countdownOverlay.textContent = count;
     countdownOverlay.classList.remove('hidden');
     
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
         count--;
         if (count > 0) {
             countdownOverlay.textContent = count;
@@ -364,39 +374,58 @@ captureBtn.addEventListener('click', () => {
             flashOverlay.classList.remove('hidden');
             setTimeout(() => flashOverlay.classList.add('active'), 10);
             
+            // 1. Immediately capture the canvas while video is still playing
+            const canvas = document.createElement('canvas');
+            if (videoElement) {
+                canvas.width = videoElement.videoWidth || 640;
+                canvas.height = videoElement.videoHeight || 480;
+                const ctx = canvas.getContext('2d');
+                ctx.translate(canvas.width, 0);
+                ctx.scale(-1, 1);
+                ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                capturedPhoto = canvas.toDataURL('image/jpeg');
+            }
+            
+            // 2. Stop camera and hide flash
+            stopCamera();
             setTimeout(() => {
-                if (videoElement) {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = videoElement.videoWidth || 640;
-                    canvas.height = videoElement.videoHeight || 480;
-                    const ctx = canvas.getContext('2d');
-                    // Flip horizontally to match mirror view
-                    ctx.translate(canvas.width, 0);
-                    ctx.scale(-1, 1);
-                    ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-                    capturedPhoto = canvas.toDataURL('image/jpeg');
-                }
-                
-                stopCamera();
                 flashOverlay.classList.remove('active');
                 setTimeout(() => flashOverlay.classList.add('hidden'), 100);
-                
-                showScreen('loading');
-                startLoadingSequence();
-            }, 500);
+            }, 100);
+            
+            // 3. Immediately show loading screen
+            showScreen('loading');
+            startLoadingSequence();
         }
     }, 1000);
 });
 
 uploadBtn.addEventListener('click', () => {
-    // Simulate file picker then proceed
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.onchange = () => {
-        stopCamera();
-        showScreen('loading');
-        startLoadingSequence();
+    input.onchange = async (e) => {
+        if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                const img = new Image();
+                img.onload = async () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    capturedPhoto = canvas.toDataURL('image/jpeg');
+                    
+                    stopCamera();
+                    showScreen('loading');
+                    startLoadingSequence();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
     };
     input.click();
 });
@@ -425,11 +454,9 @@ function startLoadingSequence() {
     }, 1500);
 }
 
-// Generate Result
-function generateResult() {
+// Calculate Result Logic
+function calculatePersonality() {
     let matchedResult = null;
-    
-    // Find matching personality based on logic
     for (let p of personalities) {
         if (p.id === 7) { // Fallback
             matchedResult = p;
@@ -437,13 +464,23 @@ function generateResult() {
         }
         
         const inScoreRange = totalScore >= p.scoreRange[0] && totalScore <= p.scoreRange[1];
-        if (inScoreRange || (p.id === 3 && userAnswers[0] === 'C')) { // Special case for #3
+        if (inScoreRange || (p.id === 3 && userAnswers[0] === 'C')) {
             if (p.condition(userAnswers)) {
                 matchedResult = p;
                 break;
             }
         }
     }
+    return matchedResult;
+}
+
+// Generate Result
+function generateResult() {
+    // If somehow matchedPersonality isn't set, calculate it
+    if (!matchedPersonality) {
+        matchedPersonality = calculatePersonality();
+    }
+    let matchedResult = matchedPersonality;
     
     // Populate UI
     document.getElementById('result-title').textContent = matchedResult.name;
@@ -452,9 +489,79 @@ function generateResult() {
     document.getElementById('result-tips').textContent = matchedResult.tips;
     
     const avatarImg = document.getElementById('result-avatar');
+    
     if (capturedPhoto) {
-        avatarImg.style.backgroundImage = `url(${capturedPhoto})`;
-        avatarImg.innerHTML = `<div class="mascot-badge">${matchedResult.emoji}</div>`;
+        const imageName = matchedResult.name.replace('【', '').replace('】', '') + '.png';
+        const sourceImg = new Image();
+        
+        sourceImg.onload = () => {
+            // Final canvas where we merge photo and illustration
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = 300; 
+            finalCanvas.height = 300;
+            const ctx = finalCanvas.getContext('2d');
+            
+            // 1. Define the face area
+            const targetFaceW = finalCanvas.width * 0.35;
+            const targetFaceH = targetFaceW * 1.1;
+            const targetFaceX = finalCanvas.width * 0.5;
+            const targetFaceY = finalCanvas.height * 0.55;
+            
+            // 2. Draw the user's photo only inside the face area (removes background)
+            const userImg = new Image();
+            userImg.onload = () => {
+                ctx.save();
+                ctx.beginPath();
+                ctx.ellipse(targetFaceX, targetFaceY, targetFaceW/2, targetFaceH/2, 0, 0, 2 * Math.PI);
+                ctx.clip();
+                
+                const scale = Math.max(finalCanvas.width / userImg.width, finalCanvas.height / userImg.height);
+                const w = userImg.width * scale;
+                const h = userImg.height * scale;
+                const x = (finalCanvas.width - w) / 2;
+                const y = (finalCanvas.height - h) / 2;
+                ctx.drawImage(userImg, x, y, w, h);
+                ctx.restore();
+                
+                // 3. Prepare the illustration layer with a hole punched out for the face
+                const overlayCanvas = document.createElement('canvas');
+                overlayCanvas.width = finalCanvas.width;
+                overlayCanvas.height = finalCanvas.height;
+                const oCtx = overlayCanvas.getContext('2d');
+                
+                const cropX = 224;
+                const cropY = 92;
+                const cropW = 1600;
+                const cropH = 1600;
+                
+                // Draw illustration
+                oCtx.drawImage(sourceImg, cropX, cropY, cropW, cropH, 0, 0, overlayCanvas.width, overlayCanvas.height);
+                
+                // Punch a hole
+                oCtx.globalCompositeOperation = 'destination-out';
+                oCtx.beginPath();
+                oCtx.ellipse(targetFaceX, targetFaceY, targetFaceW/2, targetFaceH/2, 0, 0, 2 * Math.PI);
+                oCtx.fill();
+                oCtx.globalCompositeOperation = 'source-over';
+            
+                // 3. Draw the illustration layer over the base photo
+                ctx.drawImage(overlayCanvas, 0, 0);
+                
+                // Bypass toDataURL SecurityError by directly appending the canvas!
+                avatarImg.style.backgroundImage = 'none';
+                avatarImg.innerHTML = ''; // Remove any old canvas or text
+                
+                // Style the canvas to fill the container without forcing a circle shape
+                finalCanvas.style.width = '100%';
+                finalCanvas.style.height = '100%';
+                finalCanvas.style.objectFit = 'contain'; // Changed to contain so full shape is visible
+                // Removed border-radius so the character's natural shape acts as the frame
+                
+                avatarImg.appendChild(finalCanvas);
+            };
+            userImg.src = capturedPhoto;
+        };
+        sourceImg.src = imageName;
     } else {
         avatarImg.style.backgroundImage = 'none';
         avatarImg.textContent = matchedResult.emoji;
@@ -512,9 +619,14 @@ restartBtn.addEventListener('click', () => {
     document.getElementById('result-score-fill').style.width = '0%';
     document.getElementById('result-score').textContent = '0%';
     capturedPhoto = null;
+    userFaceFeatures = null;
     videoElement = null;
-    document.getElementById('result-avatar').innerHTML = '';
-    document.getElementById('result-avatar').style.backgroundImage = 'none';
+    const avatarImg = document.getElementById('result-avatar');
+    if (avatarImg) {
+        avatarImg.innerHTML = '';
+        avatarImg.style.backgroundImage = 'none';
+        avatarImg.textContent = '';
+    }
     
     // Reset scroll position
     document.getElementById('result').scrollTop = 0;
