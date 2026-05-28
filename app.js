@@ -108,6 +108,7 @@ const personalities = [
         desc: "你的髮絲活在五星級飯店裡。你有極佳的護理觀念，將頭皮視為臉部的延伸，追求原生髮質的極致光澤與健康質感。",
         tips: "洗頭前先用梳子輕柔按摩頭皮，洗完頭後務必先塗抹護髮油再吹乾，鎖住髮絲水分。",
         emoji: "👑",
+        faceX: 149.5, faceY: 188.5, faceW: 75, faceH: 95,
         products: [
             { name: "咖啡因養髮液", desc: "強效活絡頭皮環境，維持頂級質感", price: "$4,930", imgUrl: "images/咖啡因養髮液.png", img: "🧴" },
             { name: "曠野玫瑰洗髮精", desc: "針對追求極致柔順的精緻族群", price: "$1,080", imgUrl: "images/曠野玫瑰洗髮精.png", img: "🌹" }
@@ -123,6 +124,7 @@ const personalities = [
         desc: "頭髮是你的命，造型是你的魂！即使因頻繁染燙稍有受損，你也會花半小時打造完美氛圍感。你是視覺至上主義，只要拍照漂亮，一切都值得。",
         tips: "使用電棒或造型工具前必噴抗熱噴霧，每週至少進行一次 15 分鐘的深層髮膜修護。",
         emoji: "✨",
+        faceX: 149.5, faceY: 188.5, faceW: 75, faceH: 95,
         products: [
             { name: "曠野玫瑰護髮油", desc: "染燙受損髮專屬的彈韌潤澤", price: "$1,330", imgUrl: "images/曠野玫瑰護髮油.png", img: "💧" },
             { name: "紫玫瑰護色洗髮精", desc: "保護髮色並修護脆弱髮絲", price: "$980", imgUrl: "images/紫玫瑰護色洗髮精.png", img: "🌸" }
@@ -138,6 +140,7 @@ const personalities = [
         desc: "你的頭髮正在寫辭職信。你是典型的都市高壓族，熬夜是常態，排水孔是你最害怕的風景。你的毛囊正處於極度生存危機中。",
         tips: "盡量在 11 點前關燈，讓頭皮微循環有時間重啟；頭皮緊繃時可隨手噴灑茶樹噴霧降溫。",
         emoji: "🦉",
+        faceX: 149.5, faceY: 191.5, faceW: 75, faceH: 95,
         products: [
             { name: "咖啡因養髮液", desc: "這是救命級的最後停損點", price: "$4,930", imgUrl: "images/咖啡因養髮液.png", img: "☕" },
             { name: "茶樹洗髮精", desc: "解決出油與敏感問題，維持舒爽", price: "$980", imgUrl: "images/茶樹洗髮精.png", img: "🌿" }
@@ -153,6 +156,7 @@ const personalities = [
         desc: "你很愛美，但更愛聰明消費。你會在折扣季掃貨，追求高 CP 值的護理方案。「買一送一」對你來說才是最美的風景。",
         tips: "選對成分比容量更重要，減少洗頭次數並挑選無矽靈產品，保護毛囊不被阻塞。",
         emoji: "💰",
+        faceX: 149.5, faceY: 191.5, faceW: 75, faceH: 95,
         products: [
             { name: "咖啡因洗髮精", desc: "單價雖高但成分天然，是對抗掉髮的長遠投資", price: "$1,080", img: "🧴" }
         ]
@@ -167,6 +171,7 @@ const personalities = [
         desc: "擁有強大基因的優勢，即使不特別費心保養，髮絲依舊強韌亮眼。你就是那種「起床就長這樣」的幸運兒。",
         tips: "即使懶得保養，洗完頭也請 100% 吹乾，避免濕氣讓頭皮滋生細菌造成異味。",
         emoji: "🍀",
+        faceX: 149.5, faceY: 196.5, faceW: 75, faceH: 95,
         products: [
             { name: "桃花豐盈洗髮精", desc: "讓原本就好的髮質更蓬鬆有彈性", price: "$980", imgUrl: "images/桃花豐盈洗髮精.png", img: "🍑" }
         ]
@@ -181,6 +186,7 @@ const personalities = [
         desc: "自然就是美（其實是懶）。你拒絕複雜步驟與瓶瓶罐罐，追求「一瓶搞定」的極簡護理。",
         tips: "懶得保養也沒關係，但洗髮精要選大容量、成分天然的，至少確保清潔力到位。",
         emoji: "🧘",
+        faceX: 149.5, faceY: 179.5, faceW: 75, faceH: 95,
         products: [
             { name: "綠茶洗髮精 1000mL", desc: "大容量最划算，適合追求簡單不麻煩的使用者", price: "$1,780", imgUrl: "images/綠茶洗髮精1000ml.png", img: "🍵" },
             { name: "咖啡因護髮素 1000mL", desc: "大罐用更久", price: "$2,280", imgUrl: "images/咖啡因護髮素1000ml.png", img: "🌿" }
@@ -196,6 +202,7 @@ const personalities = [
         desc: "生活規律、適度護理，你是最穩定的中堅份子。髮質狀態穩定，維持目前的平衡就是你的勝利。",
         tips: "每天洗澡時花 1 分鐘按摩頭皮促進血液循環，幫助頭髮獲取充足營養。",
         emoji: "📚",
+        faceX: 149.5, faceY: 202.5, faceW: 75, faceH: 95,
         products: [
             { name: "綠茶洗髮精", desc: "清新舒暢，適合一般髮質長期穩定使用", price: "$980", imgUrl: "images/綠茶洗髮精.png", img: "🍵" },
             { name: "頭皮清新噴霧", desc: "隨手噴灑維持整天清新", price: "$330", imgUrl: "images/頭皮清新噴霧.png", img: "💨" }
@@ -226,6 +233,7 @@ const flashOverlay = document.getElementById('flash');
 const restartBtn = document.getElementById('restart-btn');
 const submitEmailBtn = document.getElementById('submit-email');
 const emailInput = document.getElementById('email-input');
+const retakeBtn = document.getElementById('retake-btn');
 
 // Navigation
 function showScreen(id) {
@@ -491,7 +499,7 @@ function generateResult() {
     const avatarImg = document.getElementById('result-avatar');
     
     if (capturedPhoto) {
-        const imageName = matchedResult.name.replace('【', '').replace('】', '') + '.png';
+        const imageName = 'images/頭相框/' + matchedResult.name.replace('【', '').replace('】', '') + '.png';
         const sourceImg = new Image();
         
         sourceImg.onload = () => {
@@ -501,13 +509,11 @@ function generateResult() {
             finalCanvas.height = 300;
             const ctx = finalCanvas.getContext('2d');
             
-            // 1. Define the face area to exactly match the .face-guide in the preview
-            // In preview: face-guide is 120x150, at top: 55%.
-            // On a 300x300 canvas where the video is object-fit:cover, this translates to:
-            const targetFaceW = finalCanvas.width * 0.32; // 96px
-            const targetFaceH = targetFaceW * 1.25; // 120px
-            const targetFaceX = finalCanvas.width * 0.5; // Centered X
-            const targetFaceY = finalCanvas.height * 0.55; // 55% Y
+            // 1. Define the face area using the detected hole parameters for the matched follicle baby
+            const targetFaceW = matchedResult.faceW || 75;
+            const targetFaceH = matchedResult.faceH || 95;
+            const targetFaceX = matchedResult.faceX || 149.5;
+            const targetFaceY = matchedResult.faceY || 191.5;
             
             // 2. Draw the user's photo only inside the face area (removes background)
             const userImg = new Image();
@@ -517,11 +523,30 @@ function generateResult() {
                 ctx.ellipse(targetFaceX, targetFaceY, targetFaceW/2, targetFaceH/2, 0, 0, 2 * Math.PI);
                 ctx.clip();
                 
-                const scale = Math.max(finalCanvas.width / userImg.width, finalCanvas.height / userImg.height);
-                const w = userImg.width * scale;
-                const h = userImg.height * scale;
-                const x = (finalCanvas.width - w) / 2;
-                const y = (finalCanvas.height - h) / 2;
+                // Map the face from the viewfinder to the final canvas perfectly
+                const viewfinderW = 280;
+                const viewfinderH = 380;
+                const guideCx = viewfinderW * 0.5;
+                const guideCy = viewfinderH * 0.55;
+                const guideW = 120;
+                
+                // How the video was scaled and positioned in the viewfinder preview
+                const scaleViewfinder = Math.max(viewfinderW / userImg.width, viewfinderH / userImg.height);
+                const videoX = (viewfinderW - userImg.width * scaleViewfinder) / 2;
+                const videoY = (viewfinderH - userImg.height * scaleViewfinder) / 2;
+                
+                // The center of the face in the original captured image
+                const faceOrigCx = (guideCx - videoX) / scaleViewfinder;
+                const faceOrigCy = (guideCy - videoY) / scaleViewfinder;
+                
+                // The scale needed to make the face fit targetFaceW precisely
+                const scaleFinal = (targetFaceW / guideW) * scaleViewfinder;
+                
+                const w = userImg.width * scaleFinal;
+                const h = userImg.height * scaleFinal;
+                const x = targetFaceX - faceOrigCx * scaleFinal;
+                const y = targetFaceY - faceOrigCy * scaleFinal;
+                
                 ctx.drawImage(userImg, x, y, w, h);
                 ctx.restore();
                 
@@ -632,6 +657,18 @@ restartBtn.addEventListener('click', () => {
     
     // Reset scroll position
     document.getElementById('result').scrollTop = 0;
+});
+
+retakeBtn.addEventListener('click', () => {
+    capturedPhoto = null;
+    const avatarImg = document.getElementById('result-avatar');
+    if (avatarImg) {
+        avatarImg.innerHTML = '';
+        avatarImg.style.backgroundImage = 'none';
+        avatarImg.textContent = '';
+    }
+    showScreen('camera');
+    initCamera();
 });
 
 // Simple Confetti Effect
